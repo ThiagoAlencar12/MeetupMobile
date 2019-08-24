@@ -1,9 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import logo from '../../assets/logoMedia.png';
 
 import Background from '../../components/Background';
+import { cadastrarRequest } from '../../store/modules/auth/actions';
 
 import {
   Container,
@@ -15,10 +17,20 @@ import {
 } from './styles';
 
 export default function Cadastrar({ navigation }) {
+  const dispatch = useDispatch();
+
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  function handleAcessar() {}
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loading = useSelector(state => state.auth.loading);
+
+  function handleAcessar() {
+    dispatch(cadastrarRequest(name, email, password));
+  }
 
   return (
     <Background>
@@ -32,6 +44,8 @@ export default function Cadastrar({ navigation }) {
             placeholder="Digite seu nome completo!!"
             returnKeyType="next"
             onSubmitEditing={() => emailRef.current.focus()}
+            value={name}
+            onChangeText={setName}
           />
 
           <FormInput
@@ -43,6 +57,8 @@ export default function Cadastrar({ navigation }) {
             ref={emailRef}
             returnKeyType="next"
             onSubmitEditing={() => passwordRef.current.focus()}
+            value={email}
+            onChangeText={setEmail}
           />
           <FormInput
             icon="lock-outline"
@@ -51,8 +67,12 @@ export default function Cadastrar({ navigation }) {
             ref={passwordRef}
             returnKeyType="send"
             onSubmitEditing={handleAcessar}
+            value={password}
+            onChangeText={setPassword}
           />
-          <SubmitButton onPress={handleAcessar}>Acessar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handleAcessar}>
+            Criar conta
+          </SubmitButton>
         </Form>
         <Signlink onPress={() => navigation.navigate('Entrar')}>
           <SignlinkText>Já possuo uma conta</SignlinkText>

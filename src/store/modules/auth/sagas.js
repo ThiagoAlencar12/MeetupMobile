@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import { takeLatest, all, call, put } from 'redux-saga/effects';
+import { takeLatest, all, call, put, delay } from 'redux-saga/effects';
 
 import { requireSucesso, requireError } from './actions';
 import api from '../../../services/api';
@@ -19,6 +19,8 @@ export function* Entrar({ payload }) {
       Alert.alert('Erro no login', 'Usuário não encontrado, cadastre-se! :) ');
       return;
     }
+    yield delay(3000);
+
     yield put(requireSucesso(token, user));
 
     // history.push('/listaMeetup');
