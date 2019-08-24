@@ -1,19 +1,52 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useRef } from 'react';
+import { Image } from 'react-native';
+
+import logo from '../../assets/logoMedia.png';
 
 import Background from '../../components/Background';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
 
-// import { Container } from './styles';
+import {
+  Container,
+  Form,
+  FormInput,
+  SubmitButton,
+  Signlink,
+  SignlinkText,
+} from './styles';
 
-export default function Entrar() {
+export default function Entrar({ navigation }) {
+  const passwordRef = useRef();
+
+  function handleAcessar() {}
+
   return (
     <Background>
-      <Text>TEsteEntrar</Text>
-      <Input style={{ marginTop: 30 }} icon="call" placeholder="digite o numero"/>
-
-      <Button>Entrar</Button>
+      <Container>
+        <Image source={logo} />
+        <Form>
+          <FormInput
+            icon="mail-outline"
+            keyboardType="email-address"
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder="Digite seu e-mail!!"
+            returnKeyType="next"
+            onSubmitEditing={() => passwordRef.current.focus()}
+          />
+          <FormInput
+            icon="lock-outline"
+            secureTextEntry
+            placeholder="Digite sua senha!!"
+            ref={passwordRef}
+            returnKeyType="send"
+            onSubmitEditing={handleAcessar}
+          />
+          <SubmitButton onPress={handleAcessar}>Acessar</SubmitButton>
+        </Form>
+        <Signlink onPress={() => navigation.navigate('Cadastrar')}>
+          <SignlinkText>Criar uma conta gratuita</SignlinkText>
+        </Signlink>
+      </Container>
     </Background>
   );
 }
