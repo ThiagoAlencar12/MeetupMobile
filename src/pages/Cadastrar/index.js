@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import { Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import logo from '../../assets/logoMedia.png';
+import logo from '~/assets/logoMedia.png';
 
-import Background from '../../components/Background';
-import { cadastrarRequest } from '../../store/modules/auth/actions';
+import Background from '~/components/Background';
+import { cadastrarRequest } from '~/store/modules/auth/actions';
 
 import {
   Container,
